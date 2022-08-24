@@ -62,10 +62,13 @@ def convert_flac_to_ogg(flac_music, ogg_music):
         #   -c:a selects output stream, audio only in this case, I want 'libopus'
         #   -ab sets bitrate, I set it for 256k
         #   -vn stops a low-resolution cover image (theora format) from being embedded into the .ogg container
-        result = run(["ffmpeg", "-i", flac_path, "-y", "-c:a", "libopus", "-ab", "256k", "-vn", ogg_path],
-                     stderr=DEVNULL)
-        if result.returncode != 0:
-            error_encoding.append(song_flac)
+
+
+        if not os.path.isfile(ogg_path):
+            result = run(["ffmpeg", "-i", flac_path, "-y", "-c:a", "libopus", "-ab", "256k", "-vn", ogg_path],
+                         stderr=DEVNULL)
+            if result.returncode != 0:
+                error_encoding.append(song_flac)
 
         if old_album != previous_album:
 
@@ -91,6 +94,6 @@ def convert_flac_to_ogg(flac_music, ogg_music):
 
 if __name__ == "__main__":
 
-    flac_dir = '/music/flac_dir'
-    ogg_dir = '/music/ogg_dir'
+    flac_dir = '/khazaddum/alanine/music/all_music'
+    ogg_dir = '/khazaddum/alanine/music/music_mp3'
     errors = convert_flac_to_ogg(flac_dir, ogg_dir)
