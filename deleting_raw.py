@@ -1,7 +1,9 @@
 import os
 import os.path
-dir_del = '/khazaddum/alanine/downloads/100CANON/'
-# make sure to include the trailing '/' after the directory name
+dir_del = "/path/to/folder"
+
+if dir_del[-1] != '/':
+    dir_del = dir_del + '/'
 
 list_files = [i for i in os.listdir(dir_del) if '.CR2' in i]
 for i in list_files:
